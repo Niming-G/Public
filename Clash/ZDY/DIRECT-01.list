@@ -20,6 +20,7 @@ DOMAIN,instant.arubanetworks.com
 DOMAIN,setmeup.arubanetworks.com
 DOMAIN,router.asus.com
 DOMAIN,www.asusrouter.com
+DOMAIN-SUFFIX,fengshows.com
 DOMAIN-SUFFIX,hiwifi.com
 DOMAIN-SUFFIX,leike.cc
 DOMAIN-SUFFIX,miwifi.com
