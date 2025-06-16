@@ -34,6 +34,9 @@ DOMAIN,tracking.miui.com
 DOMAIN,tvsilo.vip
 DOMAIN,vd.l.qq.com
 DOMAIN,www.asusrouter.com
+DOMAIN-SUFFIX,niming.nyc.mn
+DOMAIN-SUFFIX,niming.dynv6.net
+DOMAIN-SUFFIX,zzhnj.dynv6.net
 DOMAIN-SUFFIX,dizhensubao.getui.com
 DOMAIN-SUFFIX,googletraveladservices.com
 DOMAIN-SUFFIX,hiwifi.com
