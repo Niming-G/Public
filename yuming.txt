@@ -1,0 +1,15 @@
+time.is:443#优选01
+japan.com:443#优选02
+icook.tw:443#优选03
+www.ipchicken.com:443#优选04
+www.iplocation.net:443#优选05
+iplocation.io:443#优选06
+malaysia.com:443#优选07
+www.whoer.net:443#优选08
+singapore.com:443#优选09
+www.whatismyip.com:443#优选10
+russia.com:443#优选11
+ip.sb:443#优选12
+www.pcmag.com:443#优选13
+www.4chan.org:443#优选14
+www.digitalocean.com:443#优选15
