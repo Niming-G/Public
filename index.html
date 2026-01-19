@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>全球新聞直播牆</title>
+    <style>
+        :root {
+            --bg-color: #0f0f0f;
+            --card-bg: #1e1e1e;
+            --text-color: #ffffff;
+            --accent-color: #ff0000;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: "Microsoft JhengHei", Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: var(--accent-color);
+            margin-bottom: 30px;
+            font-size: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 20px;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+        .video-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease;
+        }
+        .video-card:hover {
+            transform: translateY(-5px);
+        }
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            background: #000;
+            cursor: pointer;
+        }
+        .video-wrapper iframe, .video-wrapper img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        /* 自定義播放按鈕圖示 */
+        .play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.2);
+            z-index: 2;
+        }
+        .play-button {
+            width: 68px;
+            height: 48px;
+            background: rgba(255, 0, 0, 0.9);
+            border-radius: 12px;
+            position: relative;
+        }
+        .play-button::after {
+            content: '';
+            position: absolute;
+            left: 26px;
+            top: 14px;
+            border-style: solid;
+            border-width: 10px 0 10px 20px;
+            border-color: transparent transparent transparent white;
+        }
+        .channel-info {
+            padding: 15px;
+            background: var(--card-bg);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .channel-name {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #ececec;
+        }
+        .live-tag {
+            background: var(--accent-color);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            animation: blink 1.5s infinite;
+        }
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        @media (max-width: 480px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>電視新聞直播牆</h1>
+
+    <div class="grid-container" id="channel-grid">
+        </div>
+
+    <script>
+        const channels = [
+            { name: "TVBSXW", id: "2mCSYvcfhtc" },
+            { name: "TVBSHD", id: "o_-hSMgpAzs" },
+            { name: "TVBSNEWS", id: "m_dhMSvUCIc" },
+            { name: "中天新聞 ZTXW", id: "vr3XyVCR4T0" },
+            { name: "中視新聞 ZSXW", id: "TCnaIE_SAtM" },
+            { name: "民視新聞 MSXW", id: "ylYJSBUgaMA" },
+            { name: "寰宇新聞 HYXW", id: "6IquAgfvYmc" },
+            { name: "寰宇台灣 HYTW", id: "w87VGpgd90U" },
+            { name: "三立 iNEWS SNIN", id: "pF507BLtbqU" },
+            { name: "三立新聞 SNXW", id: "hGJkDZDchYI" },
+            { name: "東森新聞 DSXW", id: "V1p33hqPrUk" },
+            { name: "鏡新聞 JXW", id: "5n0y6b0Q25o" },
+            { name: "台視新聞 TSXW", id: "xL0ch83RAK8" },
+            { name: "公視新聞 GS", id: "quwqlazU-c8" },
+            { name: "鳳凰資訊 FHZX", id: "fN9uYWCjQaw" }
+        ];
+
+        const grid = document.getElementById('channel-grid');
+
+        channels.forEach(ch => {
+            const card = document.createElement('div');
+            card.className = 'video-card';
+            card.innerHTML = `
+                <div class="video-wrapper" onclick="startPlay(this, '${ch.id}')">
+                    <img src="https://img.youtube.com/vi/${ch.id}/maxresdefault.jpg" alt="${ch.name}">
+                    <div class="play-overlay">
+                        <div class="play-button"></div>
+                    </div>
+                </div>
+                <div class="channel-info">
+                    <span class="channel-name">${ch.name}</span>
+                    <span class="live-tag">LIVE</span>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+
+        function startPlay(container, id) {
+            // 點擊後替換為 iframe 播放器，並強制帶上 origin 參數以符合 GitHub 環境
+            const currentOrigin = window.location.origin;
+            container.innerHTML = `
+                <iframe 
+                    src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0&origin=${currentOrigin}" 
+                    allow="autoplay; encrypted-media" 
+                    allowfullscreen>
+                </iframe>`;
+        }
+    </script>
+</body>
+</html>
